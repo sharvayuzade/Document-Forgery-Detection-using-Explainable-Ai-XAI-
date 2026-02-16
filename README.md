@@ -496,5 +496,6 @@ gradcam = create_gradcam(model)
 **System:** Intel Core i5-1220P with Intel Iris Xe GPU
 
 **Status:** ✅ Ready for Production
-#   D o c u m e n t - F o r g e r y - D e t e c t i o n - u s i n g - E x p l a i n a b l e - A i - X A I -  
+#   D o c u m e n t - F o r g e r y - D e t e c t i o n - u s i n g - E x p l a i n a b l e - A i - X A I - 
+ 
  
