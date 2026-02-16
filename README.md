@@ -2,31 +2,31 @@
 
 ## 🎯 Project Overview
 
-A complete, end-to-end Problem-Based Learning (PBL) system for automated detection of forged/tampered documents using Convolutional Neural Networks (CNN) and Explainable AI techniques (Grad-CAM).
+This project provides an end-to-end system for automated detection of forged and tampered documents using Convolutional Neural Networks (CNN) and Explainable AI, specifically Grad-CAM. Built as part of the Problem-Based Learning (PBL) curriculum at Symbiosis Nagpur, it aims for reliability, transparency, and educational value.
 
 **Key Features:**
-- ✅ Binary classification: Authentic vs. Tampered documents
-- 📄 Support for Images (JPG, PNG, BMP, TIFF) and PDF files (multi-page)
-- 🔍 Grad-CAM heatmap visualization showing suspicious regions
-- 🎨 Error Level Analysis (ELA) for enhanced forgery detection
-- 📊 Web API (FastAPI) for backend processing
-- 🖥️ Interactive Streamlit UI for frontend
-- ⚡ Optimized for Intel i5-1220P with Intel Iris Xe GPU
-- 🧠 Transfer Learning using ResNet50 pre-trained on ImageNet
+- Binary classification: Authentic vs. Tampered documents
+- Supports image formats (JPG, PNG, BMP, TIFF) and multi-page PDFs
+- Grad-CAM heatmap visualization to highlight suspicious regions
+- Error Level Analysis (ELA) for deeper forgery detection
+- FastAPI-powered backend API for processing
+- Interactive Streamlit-based frontend UI
+- Optimized for Intel i5-1220P with Iris Xe GPU
+- Transfer learning using ResNet50 (pretrained on ImageNet)
 
 ---
 
 ## 📋 System Requirements
 
 ### Hardware
-- **Processor:** Intel Core i5-1220P
-- **GPU:** Intel Iris Xe (integrated)
+- **Processor:** Intel Core i5-1220P (recommended)
+- **GPU:** Intel Iris Xe (integrated or equivalent)
 - **RAM:** 8 GB minimum (16 GB recommended)
-- **Storage:** 5 GB for dataset + model + dependencies
+- **Storage:** 5 GB+ (dataset, model, dependencies)
 
 ### Software
-- **Python:** 3.9 - 3.11
-- **OS:** Windows 10/11, Linux, macOS
+- **Python:** 3.9 – 3.11
+- **OS:** Windows 10/11, Linux, or macOS
 
 ---
 
@@ -35,159 +35,119 @@ A complete, end-to-end Problem-Based Learning (PBL) system for automated detecti
 ```
 ExplainableAI XAI Implementation/
 ├── archive/
-│   └── CASIA2/              # CASIA v2.0 Dataset
-│       ├── Au/              # Authentic images
-│       ├── Tp/              # Tampered images
-│       └── CASIA 2 Groundtruth/  # Ground truth masks
+│   └── CASIA2/                  # CASIA v2.0 Dataset
+│       ├── Au/                  # Authentic images
+│       ├── Tp/                  # Tampered images
+│       └── CASIA 2 Groundtruth/ # Ground truth masks
 ├── src/
 │   ├── __init__.py
-│   ├── config.py            # Configuration & hyperparameters
+│   ├── config.py                # Configs & hyperparameters
 │   ├── data/
-│   │   └── data_loader.py   # CASIA v2.0 loader & PDF processor
+│   │   └── data_loader.py       # Dataset, PDF loader
 │   ├── models/
-│   │   └── cnn_model.py     # ResNet50 transfer learning model
+│   │   └── cnn_model.py         # ResNet50-based model
 │   ├── utils/
-│   │   └── preprocessing.py # ELA, normalization, augmentation
+│   │   └── preprocessing.py     # ELA, normalization, augmentation
 │   └── xai/
-│       └── gradcam.py       # Grad-CAM implementation
+│       └── gradcam.py           # Grad-CAM implementation
 ├── backend/
-│   └── app.py               # FastAPI application
+│   └── app.py                   # FastAPI backend
 ├── frontend/
-│   └── streamlit_app.py     # Streamlit UI
-├── models/                  # Saved model weights
-├── outputs/                 # Generated heatmaps & predictions
-├── logs/                    # Training logs
-├── train.py                 # Training script
-├── requirements.txt         # Python dependencies
-└── README.md               # This file
+│   └── streamlit_app.py         # Streamlit UI
+├── models/                      # Saved model weights
+├── outputs/                     # Predictions, visualizations
+├── logs/                        # Training logs
+├── train.py                     # Training script
+├── requirements.txt             # Python dependencies
+└── README.md                    # Project documentation
 ```
 
 ---
 
 ## 🚀 Quick Start Guide
 
-### Step 1: Clone & Setup Environment
+### 1. Clone & Setup Environment
 
 ```bash
-# Navigate to project directory
-cd "e:\Sharvayu data\Malware\Symbiosis Nagpur SIT\6th SEM\PBL\ExplainableAI XAI Implementation"
-
-# Create virtual environment
+git clone https://github.com/sharvayuzade/Document-Forgery-Detection-using-Explainable-Ai-XAI-.git
+cd Document-Forgery-Detection-using-Explainable-Ai-XAI-
 python -m venv venv
 source venv/Scripts/activate  # On Windows: venv\Scripts\activate
-
-# Upgrade pip
 pip install --upgrade pip setuptools wheel
 ```
 
-### Step 2: Install Dependencies
+### 2. Install Dependencies
 
 ```bash
-# Install with Intel optimization (recommended for i5-1220P)
 pip install -r requirements.txt
-
-# For Intel GPU optimization (optional but recommended)
+# Optional: For Intel GPU optimization
 pip install intel-extension-for-tensorflow[gpu]
 ```
 
-### Step 3: Verify Dataset
+### 3. Prepare Dataset
 
-Ensure CASIA v2.0 dataset is in place:
+Ensure CASIA v2.0 dataset is extracted:
 ```
 archive/CASIA2/
-├── Au/           # Should contain authentic images
-├── Tp/           # Should contain tampered images
-└── CASIA 2 Groundtruth/  # Should contain ground truth masks
+├── Au/                   # Authentic images
+├── Tp/                   # Tampered images
+└── CASIA 2 Groundtruth/  # Ground truth masks
 ```
 
-### Step 4: Train the Model
+### 4. Train the Model
 
 ```bash
-# From project root directory
 python train.py
-
-# Training will:
-# 1. Load CASIA v2.0 dataset (70% train, 15% val, 15% test)
-# 2. Apply preprocessing (resizing, ELA, normalization)
-# 3. Build ResNet50 with transfer learning
-# 4. Train for up to 30 epochs with early stopping
-# 5. Save best model to models/best_model.h5
-# 6. Generate evaluation metrics on test set
-
-# Expected output:
-# ✓ Loaded 5000+ authentic images
-# ✓ Loaded 5000+ tampered images
-# ✓ Model trained successfully
-# ✓ Test accuracy: ~95%+
 ```
+- Loads and splits data (70% train, 15% val, 15% test)
+- Preprocesses with resizing, ELA, normalization
+- Builds & trains ResNet50, saves best model as `models/best_model.h5`
+- Provides evaluation metrics (test accuracy: ~95%+)
 
-Training time on Intel i5-1220P: **3-6 hours** (depending on dataset size)
+*Training time*: 3-6 hours on Intel i5-1220P depending on dataset size.
 
-### Step 5: Run Backend API
+### 5. Run Backend API
 
 ```bash
-# Terminal 1: Start FastAPI server
+# In one terminal
 python -m backend.app
-
-# Server will start at http://127.0.0.1:8000
-# API documentation: http://127.0.0.1:8000/docs
+# Backend available at http://127.0.0.1:8000 (Swagger docs at /docs)
 ```
 
-### Step 6: Run Frontend UI
+### 6. Run Frontend UI
 
 ```bash
-# Terminal 2: Start Streamlit application
+# In another terminal
 streamlit run frontend/streamlit_app.py
-
-# Streamlit will open at http://localhost:8501
+# The UI opens at http://localhost:8501
 ```
 
 ---
 
 ## 📖 Usage Guide
 
-### Using the Streamlit Frontend
+### Via Streamlit Frontend
 
-1. **Upload Tab:**
-   - Click "Upload an image or PDF"
-   - Select a document (JPG, PNG, PDF, etc.)
-   - Click "🔍 Analyze"
+1. **Upload Tab:** Upload document (image or PDF), then click "Analyze".
+2. **Analysis Tab:** View prediction, confidence, Grad-CAM heatmap, and heatmap overlay.
+3. **Batch Tab:** Upload and analyze multiple documents, view/download batch results.
 
-2. **Analysis Tab:**
-   - View prediction results (Authentic/Tampered)
-   - See confidence score (0-1)
-   - View Grad-CAM heatmap highlighting suspicious regions
-   - See overlay of heatmap on original document
-   - For PDFs: Navigate through pages
+### Via FastAPI Endpoints
 
-3. **Batch Tab:**
-   - Upload multiple files at once
-   - Analyze all files in batch
-   - View results in table format
-   - Download summary report
+- **Single Image:**
+    ```bash
+    curl -X POST "http://127.0.0.1:8000/api/analyze/image" -F "file=@document.jpg"
+    ```
+- **PDF:**
+    ```bash
+    curl -X POST "http://127.0.0.1:8000/api/analyze/pdf" -F "file=@document.pdf"
+    ```
+- **Batch:**
+    ```bash
+    curl -X POST "http://127.0.0.1:8000/api/batch/analyze" -F "files=@doc1.jpg" -F "files=@doc2.pdf"
+    ```
 
-### Using the FastAPI Backend
-
-**Single Image Analysis:**
-```bash
-curl -X POST "http://127.0.0.1:8000/api/analyze/image" \
-  -F "file=@document.jpg"
-```
-
-**PDF Analysis:**
-```bash
-curl -X POST "http://127.0.0.1:8000/api/analyze/pdf" \
-  -F "file=@document.pdf"
-```
-
-**Batch Analysis:**
-```bash
-curl -X POST "http://127.0.0.1:8000/api/batch/analyze" \
-  -F "files=@doc1.jpg" \
-  -F "files=@doc2.pdf"
-```
-
-**Response Format:**
+**API Response Example:**
 ```json
 {
   "prediction_score": 0.92,
@@ -212,290 +172,141 @@ curl -X POST "http://127.0.0.1:8000/api/batch/analyze" \
 ## 🧬 Technical Details
 
 ### Model Architecture
-
-**Transfer Learning with ResNet50:**
-```
-Input (224x224x3)
-    ↓
-ResNet50 Base (pretrained on ImageNet)
-    ↓
-Global Average Pooling
-    ↓
-Dense(512) + ReLU + Dropout(0.3)
-    ↓
-Dense(256) + ReLU + Dropout(0.2)
-    ↓
-Dense(1) + Sigmoid (Binary Classification)
-    ↓
-Output: Probability [0, 1]
-```
-
-**Training Configuration:**
-- **Optimizer:** Adam (lr=0.001)
-- **Loss:** Binary Crossentropy
-- **Metrics:** Accuracy, Precision, Recall
-- **Batch Size:** 16 (optimized for 8GB GPU memory)
-- **Epochs:** 30 (with early stopping)
+- Transfer Learning: ResNet50 (ImageNet)
+- Layers: 
+    - Input (224x224x3)
+    - ResNet50 base
+    - Global Average Pooling
+    - Dense(512)+ReLU+Dropout(0.3)
+    - Dense(256)+ReLU+Dropout(0.2)
+    - Dense(1)+Sigmoid
+    
+- Optimizer: Adam (lr=0.001)
+- Loss: Binary Crossentropy
+- Metrics: Accuracy, Precision, Recall
+- Batch Size: 16 (for 8GB GPU)
+- Epochs: 30 (early stopping)
 
 ### Error Level Analysis (ELA)
+- JPEG recompression at 90% quality
+- Compares original and recompressed difference
+- Visualizes tampered areas with error map (higher values = more suspicious)
 
-Detects compression artifacts in tampered images:
-
-1. **Compression:** Save image as JPEG at 90% quality
-2. **Comparison:** Compare with original image
-3. **Error Map:** Calculate absolute difference
-4. **Visualization:** Scale differences to 0-255 range
-
-Tampered regions show higher error levels due to recompression.
-
-### Grad-CAM Heatmap
-
-Gradient-weighted Class Activation Mapping:
-
-1. **Gradient Computation:** ∇_w CAM = Σ_c y^c · ∇_w f^c
-2. **Channel Weighting:** α_c = (1/Z) Σ_xy ∂y^c/∂A_ij^c
-3. **Activation Map:** CAM = ReLU(Σ_c α_c · A^c)
-4. **Upsampling:** Resize to original image dimensions
-5. **Visualization:** Apply Jet colormap (blue→red)
-
-**Interpretation:**
-- 🔵 **Blue:** Low probability of tampering
-- 🔴 **Red:** High probability of tampering
+### Grad-CAM
+- Computes gradient-weighted class activation to highlight regions likely causing “tampered” prediction.
+- Blue = Low probability, Red = High probability of tampering.
 
 ---
 
-## 🎓 CASIA v2.0 Dataset
+## 🎓 Dataset: CASIA v2.0
 
-**Dataset Structure:**
-- **Authentic (Au):** Original, unaltered documents
-- **Tampered (Tp):** Documents with copy-move, splicing, or inpainting forgeries
-- **Ground Truth:** Binary masks indicating tampered regions
-
-**Statistics:**
-- Total images: ~10,000+
-- Classes: 2 (Authentic, Tampered)
-- Resolution: Variable (typically 512×512 - 1024×1024)
-- Format: TIFF, PNG
-
-**Data Split:**
-- Training: 70% (7,000+ images)
-- Validation: 15% (1,500+ images)
-- Testing: 15% (1,500+ images)
+- Authentic & tampered images (copy-move, splicing, inpainting)
+- Binary ground truth maps
+- ~10,000+ images, split 70%-15%-15%
+- Supported formats: TIFF, PNG
+- Recommended image resolution: 512×512 to 1024×1024
 
 ---
 
 ## ⚙️ Configuration
 
-Edit `src/config.py` to customize:
-
-```python
-# Hardware
-BATCH_SIZE = 16              # Smaller for limited GPU memory
-USE_MIXED_PRECISION = True   # Reduce memory usage
-
-# Model
-MODEL_NAME = "ResNet50"      # VGG16, MobileNetV2 also available
-INPUT_SIZE = 224             # Standard for ResNet50
-EPOCHS = 30                  # Training epochs
-
-# Data
-TRAIN_SPLIT = 0.7           # 70% training data
-VAL_SPLIT = 0.15            # 15% validation data
-TEST_SPLIT = 0.15           # 15% test data
-
-# XAI
-GRADCAM_LAYER = "conv5_block3_3_bn"  # ResNet50 last conv layer
-HEATMAP_ALPHA = 0.4         # Overlay transparency
-CONFIDENCE_THRESHOLD = 0.5   # Classification threshold
-
-# PDF
-PDF_DPI = 150               # Resolution for PDF to image conversion
-PDF_MAX_PAGES = 50          # Max pages per PDF
-```
+Customize `src/config.py` for:
+- BATCH_SIZE, USE_MIXED_PRECISION, MODEL_NAME
+- Data splits & input size
+- Grad-CAM parameters (layer, heatmap alpha, threshold)
+- PDF DPI and max pages
 
 ---
 
 ## 📊 Performance Metrics
 
-**Expected Results on CASIA v2.0:**
+| Metric         | Value          |
+|----------------|----------------|
+| Test Accuracy  | ~95-98%        |
+| Precision      | ~94-97%        |
+| Recall         | ~93-96%        |
+| F1-Score       | ~94-97%        |
+| Inference Time | ~50-100ms/img  |
 
-| Metric | Value |
-|--------|-------|
-| **Test Accuracy** | ~95-98% |
-| **Precision** | ~94-97% |
-| **Recall** | ~93-96% |
-| **F1-Score** | ~94-97% |
-| **Inference Time** | ~50-100ms per image |
-
-**Hardware Performance (Intel i5-1220P):**
-- Image processing: ~50-100ms
-- Grad-CAM computation: ~30-50ms
-- Total per image: ~100-150ms
-- Batch (16 images): ~1.5-2.5 seconds
+Intel i5-1220P: Full batch (16 images): 1.5-2.5s
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Error: "Model not found"
-```
-Solution: Run training script first
-python train.py
-```
-
-### Error: "No images loaded"
-```
-Solution: Verify CASIA v2.0 dataset structure
-- Check archive/CASIA2/Au/ and archive/CASIA2/Tp/ exist
-- Verify images are valid JPG/PNG/TIFF files
-```
-
-### Memory Issues
-```
-Solutions:
-1. Reduce BATCH_SIZE in config.py (try 8 or 4)
-2. Enable USE_MIXED_PRECISION = True
-3. Reduce INPUT_SIZE to 192 or 160
-4. Close other applications
-```
-
-### Slow Inference
-```
-Solutions:
-1. Ensure TensorFlow using GPU: check with tf.config.list_physical_devices('GPU')
-2. Install intel-extension-for-tensorflow for Intel GPU optimization
-3. Reduce PDF_DPI for faster PDF processing
-4. Use Model.predict with smaller batch sizes
-```
-
-### PDF Processing Issues
-```
-Solution: Install Poppler (required for pdf2image)
-- Windows: pip install python-poppler-qt5
-- Linux: sudo apt-get install poppler-utils
-- macOS: brew install poppler
-```
+- **Model not found:** Run `python train.py`
+- **No images loaded:** Verify dataset folder structure & file formats
+- **Memory issues:** Lower batch size, enable mixed precision, reduce input size
+- **Slow Inference:** Check GPU usage, install Intel optimizations, decrease PDF DPI
 
 ---
 
 ## 📚 Output Artifacts
 
-### Generated Files
-
-1. **Models:**
-   - `models/best_model.h5` - Best trained model
-   - `models/latest_model.h5` - Latest checkpoint
-
-2. **Predictions:**
-   - `outputs/predictions.csv` - Batch prediction results
-
-3. **Visualizations:**
-   - `outputs/heatmaps/` - Grad-CAM heatmaps
-   - `outputs/overlays/` - Heatmap overlays
-   - `outputs/masks/` - Suspicious region masks
-
-4. **Logs:**
-   - `logs/training.log` - Training progress
-   - `logs/tensorboard/` - TensorBoard events
+- `models/best_model.h5`: Best model checkpoint
+- `outputs/predictions.csv`: Batch predictions
+- `outputs/heatmaps/`, `outputs/overlays/`: Visualizations
+- `outputs/masks/`: Suspicious masks
+- `logs/training.log`: Training and metrics logs
 
 ---
 
 ## 🔬 Research & References
 
-**Key Papers:**
-1. Selvaraju et al. - "Grad-CAM: Visual Explanations from Deep Networks" (ICCV 2017)
-2. He et al. - "Deep Residual Learning for Image Recognition" (CVPR 2016)
-3. Popescu & Farid - "Exposing Digital Forgeries by Detecting Inconsistencies in Lighting" (ACM Multimedia 2007)
-
-**Datasets:**
-- CASIA v2.0: Chinese Academy of Sciences Institute of Automation
-- NIST DFSLW: National Institute of Standards and Technology
+- Grad-CAM: Visual Explanations from Deep Networks (Selvaraju et al., ICCV 2017)
+- Deep Residual Learning (He et al., CVPR 2016)
+- Forensics: Lighting inconsistencies (Popescu & Farid, ACM Multimedia 2007)
+- **Datasets:** CASIA v2.0, NIST DFSLW
 
 ---
 
 ## 📝 License
 
-This project is for educational purposes as part of the Problem-Based Learning (PBL) curriculum at Symbiosis Nagpur (Pune).
+For educational use (PBL, Symbiosis Nagpur). Not for commercial/production deployment without proper review.
 
 ---
 
-## 👨‍💻 Development Team
+## 👨‍💻 Development Info
 
-**Role:** AI Researcher and Full-Stack Developer
+**Role:** AI Researcher & Full-Stack Developer
 
 **Technologies:**
-- Python, TensorFlow/Keras
-- FastAPI, Streamlit
-- OpenCV, NumPy, Scikit-learn
-- Docker (optional for deployment)
+- Python, TensorFlow/Keras, OpenCV, NumPy, scikit-learn
+- FastAPI (backend), Streamlit (frontend)
+- Docker (optional)
 
 ---
 
-## 📞 Support & Documentation
+## 📞 Documentation & Support
 
-### API Documentation
-- **Swagger UI:** http://localhost:8000/docs
-- **ReDoc:** http://localhost:8000/redoc
-
-### Jupyter Notebooks (Optional)
-Create notebooks in project root for interactive analysis:
-```python
-# Example: notebook for testing individual components
-import sys
-sys.path.insert(0, 'src')
-from models.cnn_model import create_model
-from xai.gradcam import create_gradcam
-
-model = create_model()
-gradcam = create_gradcam(model)
-```
+- **API Docs:** Swagger UI - http://localhost:8000/docs, ReDoc - http://localhost:8000/redoc
+- **Jupyter Notebook:** Recommended for testing (`sys.path.insert(0, 'src')` to use project modules)
 
 ---
 
 ## 🎯 Future Enhancements
 
-1. **Model Improvements:**
-   - Multi-class tampering detection (copy-move, splicing, etc.)
-   - Ensemble models for better accuracy
-   - Adversarial robustness testing
-
-2. **XAI Enhancements:**
-   - LIME (Local Interpretable Model-agnostic Explanations)
-   - SHAP (SHapley Additive exPlanations)
-   - Attention mechanisms visualization
-
-3. **System Enhancements:**
-   - Docker containerization
-   - Database integration (PostgreSQL)
-   - Real-time processing pipeline
-   - Mobile app (React Native)
-
-4. **Deployment:**
-   - Cloud deployment (AWS, Google Cloud)
-   - Edge deployment (Intel Edge AI)
-   - Model quantization & optimization
+- Multi-class detection (copy-move, splicing, etc.)
+- Model ensembling, adversarial robustness
+- Additional XAI (LIME, SHAP)
+- Deployment: Docker, cloud, edge/mobile apps
 
 ---
 
-## ✅ Checklist for Setup
+## ✅ Setup Checklist
 
 - [ ] Python 3.9+ installed
-- [ ] Virtual environment created and activated
+- [ ] Virtual environment created & activated
 - [ ] Dependencies installed (`pip install -r requirements.txt`)
-- [ ] CASIA v2.0 dataset extracted to `archive/CASIA2/`
-- [ ] Training completed (`python train.py`)
-- [ ] Backend tested (`python -m backend.app`)
-- [ ] Frontend tested (`streamlit run frontend/streamlit_app.py`)
-- [ ] API endpoints verified (http://localhost:8000/docs)
+- [ ] CASIA v2.0 dataset in place
+- [ ] Model trained (`python train.py`)
+- [ ] Backend running (`python -m backend.app`)
+- [ ] Frontend running (`streamlit run frontend/streamlit_app.py`)
+- [ ] API endpoints verified
 - [ ] Sample predictions generated
 
 ---
 
-**Last Updated:** February 16, 2026
-
-**System:** Intel Core i5-1220P with Intel Iris Xe GPU
-
-**Status:** ✅ Ready for Production
-#   D o c u m e n t - F o r g e r y - D e t e c t i o n - u s i n g - E x p l a i n a b l e - A i - X A I - 
- 
- 
+**Last Updated:** February 16, 2026  
+**System:** Intel Core i5-1220P, Intel Iris Xe GPU  
+**Status:** ✅ Ready for demo & further enhancement
